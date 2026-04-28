@@ -2,6 +2,7 @@
 import importlib
 import os
 import sys
+import unittest
 
 import numpy as np
 
@@ -36,6 +37,7 @@ from inductor.test_torchinductor import (  # @manual=fbcode//caffe2/test/inducto
 # This tests basic MPS compile functionality
 
 
+@unittest.skipIf(sys.platform != "darwin", "MPS backend is macOS-only")
 @instantiate_parametrized_tests
 class MPSBasicTests(TestCase):
     is_dtype_supported = CommonTemplate.is_dtype_supported
@@ -156,6 +158,7 @@ class MPSBasicTests(TestCase):
         self.common(fn, (A,), check_lowp=False)
 
 
+@unittest.skipIf(sys.platform != "darwin", "MPS backend is macOS-only")
 class MPSBasicTestsAOTI(TestCase):
     def check_model(self, m, inp, dynamic_shapes=None):
         res2 = m(*inp)
