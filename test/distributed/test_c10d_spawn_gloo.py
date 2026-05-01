@@ -31,6 +31,10 @@ class DistributedDataParallelSingleProcessTest(TestCase):
 
     def tearDown(self):
         try:
+            c10d.destroy_process_group()
+        except AssertionError:
+            pass
+        try:
             os.remove(self.file.name)
         except OSError:
             pass
